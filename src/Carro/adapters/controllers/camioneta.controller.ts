@@ -3,7 +3,7 @@ import { CamionetaService } from '../../domain/services/camioneta.service';
 
 import {Camioneta} from '../../domain/models/Camioneta.model';
 import { AuthGuard } from '@nestjs/passport';
-
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 const errReturn = (e: Error, message: string) => {
    return {
@@ -13,7 +13,7 @@ const errReturn = (e: Error, message: string) => {
 }
    
 @Controller('camionetas')
-export class CamionetaController{
+export class CamionetaController {
 constructor(private readonly camionetaService: CamionetaService) { }
 
    @Get()
@@ -26,7 +26,7 @@ constructor(private readonly camionetaService: CamionetaService) { }
       }
    }
    
-   @UseGuards(AuthGuard('local'))
+   @UseGuards(JwtAuthGuard)
    @Post()
    crear(@Body() datos: Camioneta) {
       try{
